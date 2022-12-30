@@ -1,0 +1,4 @@
+# Assumptions:
+
+- Assuming using the random image API https://picsum.photos/ to render the displayed cars yet the images will be random
+- Assuming 'Book now' feature is not in scope
