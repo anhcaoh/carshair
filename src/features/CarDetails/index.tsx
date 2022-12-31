@@ -8,12 +8,11 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import {ICar} from '../../hooks/useCars';
-
-export interface ICarProps<DataType> {
-  data: DataType;
-  styles?: object;
-  onPress: (event: GestureResponderEvent) => void;
+import {useRoute} from '@react-navigation/native';
+import {RootStackParamList} from '../../../App';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+export interface ICarDetailsProps {
+  id: string;
 }
 export interface ICarPhotoProps {
   uri: string;
@@ -81,12 +80,16 @@ const carStyles = StyleSheet.create({
 const CarPhoto = ({uri, styles}: ICarPhotoProps) => {
   return <Image style={styles} source={{uri: uri}} />;
 };
-const Car = ({data, onPress}: ICarProps<ICar>) => {
+type CarDetailsProps = NativeStackScreenProps<RootStackParamList, 'CarDetails'>;
+const CarDetails = (_props: CarDetailsProps) => {
+  const {
+    params: {id},
+  } = useRoute<CarDetailsProps['route']>();
+  console.log(id);
   const _key = useMemo(() => Math.floor(Math.random() * 100), []);
-  const {make, model, year, price} = data;
   return (
     <View style={carStyles.container}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity>
         <View style={carStyles.photoView}>
           <CarPhoto
             uri={`https://picsum.photos/${carStyles.photo.width}/${carStyles.photo.height}?ramdon=${_key}`}
@@ -96,14 +99,12 @@ const Car = ({data, onPress}: ICarProps<ICar>) => {
         <View style={carStyles.details}>
           <View>
             <View style={carStyles.yearMakeModelView}>
-              <Text style={carStyles.text}>
-                {year} {make} {model}
-              </Text>
+              <Text style={carStyles.text}>{/* {year} {make} {model} */}</Text>
             </View>
             <View style={carStyles.flexRow}>
               <View style={carStyles.priceView}>
                 <Text>
-                  <Text style={carStyles.price}>{price}</Text>
+                  {/* <Text style={carStyles.price}>{price}</Text> */}
                   <Text style={carStyles.text}> / day</Text>
                 </Text>
               </View>
@@ -127,4 +128,4 @@ const Car = ({data, onPress}: ICarProps<ICar>) => {
     </View>
   );
 };
-export default Car;
+export default CarDetails;
