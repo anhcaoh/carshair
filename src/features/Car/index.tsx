@@ -15,6 +15,7 @@ import {CarsScreenProps} from '../Cars';
 export interface ICarProps<DataType> {
   data: DataType;
   styles?: object;
+  Component?: React.PureComponent | any;
   onPress: (event: GestureResponderEvent) => void;
 }
 export interface ICarPhotoProps {
@@ -44,6 +45,10 @@ const carStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  detailsComponent: {
+    padding: 10,
+    fontSize: 24,
+  },
   details: {
     display: 'flex',
     flexDirection: 'row',
@@ -56,7 +61,6 @@ const carStyles = StyleSheet.create({
   priceView: {
     width: '60%',
     height: '100%',
-    paddingBottom: 20,
   },
   price: {
     fontWeight: 'bold',
@@ -67,6 +71,7 @@ const carStyles = StyleSheet.create({
     width: '40%',
   },
   bookNowView: {
+    marginTop: 20,
     padding: 10,
     backgroundColor: '#000',
   },
@@ -83,7 +88,7 @@ const carStyles = StyleSheet.create({
 const CarPhoto = ({uri, styles}: ICarPhotoProps) => {
   return <Image style={styles} source={{uri: uri}} />;
 };
-const Car = ({data, onPress}: ICarProps<ICar>) => {
+const Car = ({data, Component, onPress}: ICarProps<ICar>) => {
   const navigation = useNavigation<CarsScreenProps>();
   const _key = useMemo(() => Math.floor(Math.random() * 100), []);
   const {id, vin, make, model, year, price} = data;
@@ -99,9 +104,7 @@ const Car = ({data, onPress}: ICarProps<ICar>) => {
         <View style={carStyles.details}>
           <View>
             <View style={carStyles.yearMakeModelView}>
-              <Text>
-                #{id} - VIN: {vin}
-              </Text>
+              <Text>VIN: {vin}</Text>
               <Text style={carStyles.text}>
                 {year} {make} {model}
               </Text>
@@ -120,6 +123,7 @@ const Car = ({data, onPress}: ICarProps<ICar>) => {
                     console.log('LEARN MORE PRESSED');
                     navigation.navigate('CarDetails', {
                       id,
+                      vin,
                     });
                   }}
                 />
@@ -127,6 +131,11 @@ const Car = ({data, onPress}: ICarProps<ICar>) => {
             </View>
           </View>
         </View>
+        {Component && (
+          <View style={carStyles.detailsComponent}>
+            <Component />
+          </View>
+        )}
         <View style={carStyles.bookNowView}>
           <Button
             onPress={() => console.log('BOOK NOW PRESSED')}
