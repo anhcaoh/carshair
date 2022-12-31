@@ -66,6 +66,7 @@ export type RootStackParamList = {
   Cars: undefined;
   CarDetails: {
     id: number;
+    vin: string;
   };
 };
 const Stack = createNativeStackNavigator();

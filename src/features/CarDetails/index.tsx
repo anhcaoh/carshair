@@ -11,6 +11,7 @@ import {
 import {useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '../../../App';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import useCar from '../../hooks/useCar';
 export interface ICarDetailsProps {
   id: string;
 }
@@ -83,23 +84,27 @@ const CarPhoto = ({uri, styles}: ICarPhotoProps) => {
 type CarDetailsProps = NativeStackScreenProps<RootStackParamList, 'CarDetails'>;
 const CarDetails = (_props: CarDetailsProps) => {
   const {
-    params: {id},
+    params: {id, vin},
   } = useRoute<CarDetailsProps['route']>();
-  console.log(id);
-  const _key = useMemo(() => Math.floor(Math.random() * 100), []);
+  const {car: make, car_model: model, car_model_year: year} = useCar({id, vin});
   return (
     <View style={carStyles.container}>
       <TouchableOpacity>
         <View style={carStyles.photoView}>
           <CarPhoto
-            uri={`https://picsum.photos/${carStyles.photo.width}/${carStyles.photo.height}?ramdon=${_key}`}
+            uri={`https://picsum.photos/${carStyles.photo.width}/${carStyles.photo.height}?ramdon=${id}`}
             styles={carStyles.photo}
           />
         </View>
         <View style={carStyles.details}>
           <View>
             <View style={carStyles.yearMakeModelView}>
-              <Text style={carStyles.text}>{/* {year} {make} {model} */}</Text>
+              <Text>
+                #{id} - VIN: {vin}
+              </Text>
+              <Text style={carStyles.text}>
+                {year} {make} {model}
+              </Text>
             </View>
             <View style={carStyles.flexRow}>
               <View style={carStyles.priceView}>

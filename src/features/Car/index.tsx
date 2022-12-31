@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useMemo} from 'react';
 import {
   GestureResponderEvent,
@@ -9,6 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {ICar} from '../../hooks/useCars';
+import {CarsScreenProps} from '../Cars';
 
 export interface ICarProps<DataType> {
   data: DataType;
@@ -82,8 +84,9 @@ const CarPhoto = ({uri, styles}: ICarPhotoProps) => {
   return <Image style={styles} source={{uri: uri}} />;
 };
 const Car = ({data, onPress}: ICarProps<ICar>) => {
+  const navigation = useNavigation<CarsScreenProps>();
   const _key = useMemo(() => Math.floor(Math.random() * 100), []);
-  const {make, model, year, price} = data;
+  const {id, vin, make, model, year, price} = data;
   return (
     <View style={carStyles.container}>
       <TouchableOpacity onPress={onPress}>
@@ -96,6 +99,9 @@ const Car = ({data, onPress}: ICarProps<ICar>) => {
         <View style={carStyles.details}>
           <View>
             <View style={carStyles.yearMakeModelView}>
+              <Text>
+                #{id} - VIN: {vin}
+              </Text>
               <Text style={carStyles.text}>
                 {year} {make} {model}
               </Text>
@@ -110,7 +116,12 @@ const Car = ({data, onPress}: ICarProps<ICar>) => {
               <View style={carStyles.learnMoreView}>
                 <Button
                   title="LEARN MORE"
-                  onPress={() => console.log('LEARN MORE PRESSED')}
+                  onPress={() => {
+                    console.log('LEARN MORE PRESSED');
+                    navigation.navigate('CarDetails', {
+                      id,
+                    });
+                  }}
                 />
               </View>
             </View>

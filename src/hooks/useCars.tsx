@@ -2,6 +2,8 @@ import {useEffect, useState} from 'react';
 
 export interface ICar {
   // for used within app e.g. IFakeCar > ICar
+  id: number;
+  vin: string;
   make: string;
   color: string;
   model: string;
@@ -10,14 +12,18 @@ export interface ICar {
 }
 export interface IFakeCar {
   // from api fetched
+  id: number;
+  car_vin: string;
   car: string;
   car_color: string;
   car_model: string;
   car_model_year: number;
   price: string;
 }
-const defaultCars = [
+export const defaultCars = [
   {
+    id: 381,
+    car_vin: '5GTMNGEE8A8713093',
     car: 'bmw',
     car_color: 'red',
     car_model: 'x3',
