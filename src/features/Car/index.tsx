@@ -15,6 +15,7 @@ import {CarsScreenProps} from '../Cars';
 export interface ICarProps<DataType> {
   data: DataType;
   styles?: object;
+  showLearnMore?: boolean;
   Component?: React.PureComponent | any;
   onPress: (event: GestureResponderEvent) => void;
 }
@@ -26,8 +27,7 @@ export interface ICarPhotoProps {
   };
 }
 const carStyles = StyleSheet.create({
-  flexRow: {
-    flex: 1,
+  callToAction: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -36,7 +36,7 @@ const carStyles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     paddingTop: 0,
-    backgroundColor: '#e1e1e1',
+    backgroundColor: '#f1f1f1',
   },
   text: {
     fontSize: 24,
@@ -58,9 +58,13 @@ const carStyles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
   },
-  priceView: {
+  priceViewWithCTA: {
     width: '60%',
     height: '100%',
+  },
+  priceView: {
+    // width: '60%',
+    // height: '100%',
   },
   price: {
     fontWeight: 'bold',
@@ -88,7 +92,7 @@ const carStyles = StyleSheet.create({
 const CarPhoto = ({uri, styles}: ICarPhotoProps) => {
   return <Image style={styles} source={{uri: uri}} />;
 };
-const Car = ({data, Component, onPress}: ICarProps<ICar>) => {
+const Car = ({data, showLearnMore, Component, onPress}: ICarProps<ICar>) => {
   const navigation = useNavigation<CarsScreenProps>();
   const _key = useMemo(() => Math.floor(Math.random() * 100), []);
   const {id, vin, make, model, year, price} = data;
@@ -109,25 +113,32 @@ const Car = ({data, Component, onPress}: ICarProps<ICar>) => {
                 {year} {make} {model}
               </Text>
             </View>
-            <View style={carStyles.flexRow}>
-              <View style={carStyles.priceView}>
+            <View style={carStyles.callToAction}>
+              <View
+                style={
+                  showLearnMore === false
+                    ? carStyles.priceView
+                    : carStyles.priceViewWithCTA
+                }>
                 <Text>
                   <Text style={carStyles.price}>{price}</Text>
                   <Text style={carStyles.text}> / day</Text>
                 </Text>
               </View>
-              <View style={carStyles.learnMoreView}>
-                <Button
-                  title="LEARN MORE"
-                  onPress={() => {
-                    console.log('LEARN MORE PRESSED');
-                    navigation.navigate('CarDetails', {
-                      id,
-                      vin,
-                    });
-                  }}
-                />
-              </View>
+              {showLearnMore === false ? null : (
+                <View style={carStyles.learnMoreView}>
+                  <Button
+                    title="LEARN MORE"
+                    onPress={() => {
+                      console.log('LEARN MORE PRESSED');
+                      navigation.navigate('CarDetails', {
+                        id,
+                        vin,
+                      });
+                    }}
+                  />
+                </View>
+              )}
             </View>
           </View>
         </View>

@@ -53,6 +53,7 @@ const CarDetails = (_props: CarDetailsProps) => {
           year,
           price,
         }}
+        showLearnMore={false}
         Component={Details}
         onPress={() => {}}
       />
