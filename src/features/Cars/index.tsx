@@ -1,10 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useMemo} from 'react';
-import {FlatList, ListRenderItem, Text} from 'react-native';
+import {FlatList, ListRenderItem, Text, View} from 'react-native';
 import {RootStackParamList} from '../../../App';
 import useCars, {ICar} from '../../hooks/useCars';
 import Car from '../Car';
+import SimpleSearch from '../SimpleSearch';
 
 interface ICarsProps {}
 type RenderItemProps<ItemType> = {
@@ -42,7 +43,12 @@ const Cars = (_props: ICarsProps) => {
   const renderItem: ListRenderItem<ICar> = ({item}: RenderItemProps<ICar>) => {
     return <Car data={item} onPress={() => handleItemOnPress(item)} />;
   };
-  return <FlatList data={_cars} renderItem={renderItem} />;
+  return (
+    <View>
+      <SimpleSearch />
+      <FlatList data={_cars} renderItem={renderItem} />
+    </View>
+  );
 };
 
 export default Cars;

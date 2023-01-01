@@ -16,7 +16,7 @@ export interface ICarPhotoProps {
   };
 }
 type CarDetailsProps = NativeStackScreenProps<RootStackParamList, 'CarDetails'>;
-const CarDetails = (_props: CarDetailsProps) => {
+const CarDetails = () => {
   const {
     params: {id, vin},
   } = useRoute<CarDetailsProps['route']>();
@@ -38,6 +38,7 @@ const CarDetails = (_props: CarDetailsProps) => {
         <Text>Color: {color}</Text>
         <Text />
         <Text>Daily Rental: {price}</Text>
+        <Text>Accepted: Visa / Mastercard</Text>
       </View>
     );
   };
