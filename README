@@ -1,10 +1,10 @@
-# Get started:
+# Get started
 
 1. run `yarn install` to download dependencies
 2. navigate to subfolder `/ios` and run `pod install`, then `cd ..` to go back to the app's root
 3. run `yarn ios` to start the app locally via iOS simulator
 
-# Assumptions:
+# Assumptions
 
 - Assuming using the random image API https://picsum.photos/ to render the displayed cars yet the images will be random
 - Assuming 'Book now' feature is not in scope
