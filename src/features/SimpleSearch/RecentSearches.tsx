@@ -6,6 +6,9 @@ export interface IRecentSearches {
   handleOnSearchCars: Function;
 }
 const recentSearchesStyles = StyleSheet.create({
+  container: {
+    marginTop: 10,
+  },
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -16,7 +19,7 @@ const recentSearchesStyles = StyleSheet.create({
 const RecentSearches = ({data, handleOnSearchCars}: IRecentSearches) => {
   return (
     (data?.length && (
-      <View>
+      <View style={recentSearchesStyles.container}>
         <Text>Recent Searches:</Text>
         <View style={recentSearchesStyles.flexRow}>
           {data?.map(text => (

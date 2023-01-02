@@ -13,6 +13,7 @@ import useCars, {IFakeCar} from '../../hooks/useCars';
 import useDebounce from '../../hooks/useDebounce';
 import filterCars from '../../utils/list/filterCars';
 import RecentSearches from './RecentSearches';
+import SearchResults from './SearchResults';
 
 export interface ICarProps<DataType> {
   data: DataType;
@@ -29,66 +30,14 @@ export interface ICarPhotoProps {
   };
 }
 const carStyles = StyleSheet.create({
-  callToAction: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   container: {
-    marginBottom: 10,
     padding: 10,
     paddingTop: 0,
     backgroundColor: '#f1f1f1',
   },
   filterResultsContainer: {
-    paddingTop: 10,
     paddingLeft: 20,
     paddingRight: 20,
-  },
-  text: {
-    fontSize: 24,
-  },
-  photoView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  detailsComponent: {
-    padding: 10,
-    fontSize: 24,
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 10,
-  },
-  yearMakeModelView: {
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  priceViewWithCTA: {
-    width: '60%',
-    height: '100%',
-  },
-  price: {
-    fontWeight: 'bold',
-    fontSize: 24,
-    color: 'green',
-  },
-  learnMoreView: {
-    width: '40%',
-  },
-  bookNowView: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#000',
-  },
-  button: {
-    color: '#fff', //'#007AFF',
-  },
-  photo: {
-    width: 400,
-    height: 200,
-    resizeMode: 'contain',
   },
 });
 const SimpleSearch = () => {
@@ -111,7 +60,7 @@ const SimpleSearch = () => {
     <SafeAreaView style={carStyles.container}>
       <TouchableOpacity>
         <TextInput
-          style={styles.input}
+          style={simpleSearchStyles.input}
           onChangeText={handleOnSearchCars}
           placeholder="Search cars"
         />
@@ -120,13 +69,13 @@ const SimpleSearch = () => {
             data={recentSearches}
             handleOnSearchCars={handleOnSearchCars}
           />
-          {maybeCars && <Text>Found {maybeCars.length} cars:</Text>}
+          <SearchResults data={maybeCars} />
         </View>
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
-const styles = StyleSheet.create({
+const simpleSearchStyles = StyleSheet.create({
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -135,8 +84,10 @@ const styles = StyleSheet.create({
     height: 40,
     marginLeft: 5,
     marginRight: 5,
+    marginBottom: 5,
     borderWidth: 1,
     borderColor: '#999',
+    backgroundColor: '#fff',
     padding: 10,
   },
 });
