@@ -4,6 +4,7 @@ import React, {useMemo} from 'react';
 import {FlatList, ListRenderItem, Text, View} from 'react-native';
 import {RootStackParamList} from '../../../App';
 import useCars, {ICar} from '../../hooks/useCars';
+import useCarsStore from '../../hooks/useCarsStore';
 import Car from '../Car';
 import SimpleSearch from '../SimpleSearch';
 
@@ -16,10 +17,11 @@ export type CarsScreenProps = NativeStackNavigationProp<
   'Cars'
 >;
 const Cars = (_props: ICarsProps) => {
+  const {cars: carsInStore} = useCarsStore();
   const navigation = useNavigation<CarsScreenProps>();
   const [cars, loading, error] = useCars();
   const _cars = useMemo(() => {
-    return cars?.map(
+    const cleansedCars = (carsInStore?.length ? carsInStore : cars)?.map(
       ({id, car_vin, car, car_model, car_color, car_model_year, price}) => {
         return {
           id,
@@ -32,7 +34,8 @@ const Cars = (_props: ICarsProps) => {
         };
       },
     );
-  }, [cars]);
+    return cleansedCars;
+  }, [carsInStore, cars]);
   loading && <Text>Loading...</Text>;
   error && <Text>Something went wrong!</Text>;
   const handleItemOnPress = (item: any) => {

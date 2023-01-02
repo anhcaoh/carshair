@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import useCars, {IFakeCar} from '../../hooks/useCars';
+import useCarsStore from '../../hooks/useCarsStore';
 import useDebounce from '../../hooks/useDebounce';
 import filterCars from '../../utils/list/filterCars';
 import RecentSearches from './RecentSearches';
@@ -41,6 +42,7 @@ const carStyles = StyleSheet.create({
   },
 });
 const SimpleSearch = () => {
+  const {addCarsToStore} = useCarsStore();
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [maybeCars, setMaybeCars] = useState<IFakeCar[] | null>(null);
   const [cars] = useCars();
@@ -49,6 +51,7 @@ const SimpleSearch = () => {
     if (cars?.length && text.length >= 3) {
       const matchingCars = filterCars(text, cars);
       setMaybeCars(matchingCars);
+      matchingCars && addCarsToStore(matchingCars);
       if (matchingCars?.length) {
         setRecentSearches([...new Set([...recentSearches, text])]);
       }
