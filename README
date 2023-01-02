@@ -9,3 +9,7 @@
 - Assuming using the random image API https://picsum.photos/ to render the displayed cars yet the images will be random
 - Assuming 'Book now' feature is not in scope
 - Assuming developers (whom running this repo) have the sufficient software development requirements installed locally to run react native apps on iOS simulator (i.e. xCode, Ruby, CocoaPods, Node, react-native-cli)
+
+# Screenshots:
+
+- See /public/screenshots for locally running Carshair app
