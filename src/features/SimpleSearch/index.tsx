@@ -65,14 +65,19 @@ const SimpleSearch = () => {
         <TextInput
           style={simpleSearchStyles.input}
           onChangeText={handleOnSearchCars}
-          placeholder="Search cars"
+          placeholder="Search cars by make, model, color, year, or price"
         />
         <View style={carStyles.filterResultsContainer}>
           <RecentSearches
             data={recentSearches}
             handleOnSearchCars={handleOnSearchCars}
           />
-          <SearchResults data={maybeCars} />
+          {(maybeCars?.length && (
+            <View style={simpleSearchStyles.resultsFoundView}>
+              {<Text>Found {maybeCars.length} car(s):</Text>}
+            </View>
+          )) ||
+            null}
         </View>
       </TouchableOpacity>
     </SafeAreaView>
@@ -82,6 +87,9 @@ const simpleSearchStyles = StyleSheet.create({
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  resultsFoundView: {
+    marginBottom: 10,
   },
   input: {
     height: 40,

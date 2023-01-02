@@ -1,4 +1,11 @@
+# Get started:
+
+1. run `yarn install` to download dependencies
+2. navigate to subfolder `/ios` and run `pod install`, then `cd ..` to go back to the app's root
+3. run `yarn ios` to start the app locally via iOS simulator
+
 # Assumptions:
 
 - Assuming using the random image API https://picsum.photos/ to render the displayed cars yet the images will be random
 - Assuming 'Book now' feature is not in scope
+- Assuming developers (whom running this repo) have the sufficient software development requirements installed locally to run react native apps on iOS simulator (i.e. xCode, Ruby, CocoaPods, Node, react-native-cli)
