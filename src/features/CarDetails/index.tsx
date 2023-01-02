@@ -5,6 +5,7 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useCar from '../../hooks/useCar';
 import Car from '../Car';
 import {Text, View} from 'react-native';
+import {Bold, H2, H3, Italic} from '../../components/Typography/Text';
 export interface ICarDetailsProps {
   id: string;
 }
@@ -30,15 +31,29 @@ const CarDetails = () => {
   const Details = () => {
     return (
       <View>
-        <Text>Car Details:</Text>
-        <Text>VIN: {vin}</Text>
-        <Text>Make: {make}</Text>
-        <Text>Model: {model}</Text>
-        <Text>Year: {year}</Text>
-        <Text>Color: {color}</Text>
+        <H3>Car Details:</H3>
+        <Text>
+          VIN: <Bold>{vin}</Bold>
+        </Text>
+        <Text>
+          Make: <Bold>{make}</Bold>
+        </Text>
+        <Text>
+          Model: <Bold>{model}</Bold>
+        </Text>
+        <Text>
+          Year: <Bold>{year}</Bold>
+        </Text>
+        <Text>
+          Color: <Bold>{color}</Bold>
+        </Text>
         <Text />
-        <Text>Daily Rental: {price}</Text>
-        <Text>Accepted: Visa / Mastercard</Text>
+        <Text>
+          Daily Rental: <Bold>{price}</Bold>
+        </Text>
+        <Text>
+          Accepted: <Italic>Visa / Mastercard / Discover</Italic>
+        </Text>
       </View>
     );
   };

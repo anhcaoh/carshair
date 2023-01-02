@@ -2,7 +2,6 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useMemo} from 'react';
 import {
   GestureResponderEvent,
-  Text,
   Button,
   TouchableOpacity,
   View,
@@ -10,6 +9,7 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
+import Text, {Bold, H1, H2} from '../../components/Typography/Text';
 import {ICar} from '../../hooks/useCars';
 import {CarsScreenProps} from '../Cars';
 
@@ -57,16 +57,12 @@ const carStyles = StyleSheet.create({
   },
   yearMakeModelView: {
     paddingTop: 10,
-    paddingBottom: 10,
   },
   priceViewWithCTA: {
     width: '60%',
     height: '100%',
   },
-  priceView: {
-    // width: '60%',
-    // height: '100%',
-  },
+  priceView: {},
   price: {
     fontWeight: 'bold',
     fontSize: 24,
@@ -110,9 +106,9 @@ const Car = ({data, showLearnMore, Component, onPress}: ICarProps<ICar>) => {
           <View>
             <View style={carStyles.yearMakeModelView}>
               <Text>VIN: {vin}</Text>
-              <Text style={carStyles.text}>
+              <H2 style={carStyles.text}>
                 {year} {make} {model}
-              </Text>
+              </H2>
             </View>
             <View style={carStyles.callToAction}>
               <View
@@ -122,7 +118,7 @@ const Car = ({data, showLearnMore, Component, onPress}: ICarProps<ICar>) => {
                     : carStyles.priceViewWithCTA
                 }>
                 <Text>
-                  <Text style={carStyles.price}>{price}</Text>
+                  <Bold style={carStyles.price}>{price}</Bold>
                   <Text style={carStyles.text}> / day</Text>
                 </Text>
               </View>
