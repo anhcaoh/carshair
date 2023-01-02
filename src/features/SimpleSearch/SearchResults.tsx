@@ -18,7 +18,7 @@ const SearchResults = ({data}: ISearchResults) => {
   return (
     (data?.length && (
       <View style={searchResultsStyles.flexRow}>
-        {<Text>Found {data.length} cars:</Text>}
+        {<Text>Found {data.length} car(s):</Text>}
       </View>
     )) ||
     null
