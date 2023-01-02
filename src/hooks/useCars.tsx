@@ -31,19 +31,22 @@ export const defaultCars = [
     price: '$2987.01',
   },
 ];
-const useCars = (): [IFakeCar[], boolean, any] => {
-  const [cars, setCars] = useState<IFakeCar[]>(defaultCars);
+const useCars = (): [IFakeCar[] | null, boolean, any] => {
+  const [cars, setCars] = useState<IFakeCar[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
-    setLoading(true);
-    fetch('https://myfakeapi.com/api/cars/')
-      .then(response => response.json())
-      .then(results => setCars(results.cars.splice(0, 100)))
-      .catch(err => setError(err))
-      .finally(() => setLoading(false));
-  }, []);
+    console.log('Initial fetch');
+    if (!cars) {
+      setLoading(true);
+      fetch('https://myfakeapi.com/api/cars/')
+        .then(response => response.json())
+        .then(results => setCars(results.cars.splice(0, 100)))
+        .catch(err => setError(err))
+        .finally(() => setLoading(false));
+    }
+  }, [cars]);
 
   return [cars, loading, error];
 };

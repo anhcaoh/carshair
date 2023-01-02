@@ -1,18 +1,17 @@
-import React, {useMemo} from 'react';
+import React, {useState} from 'react';
 import {
   GestureResponderEvent,
   Text,
   Button,
   TouchableOpacity,
-  View,
-  Image,
   StyleSheet,
   TextInput,
   SafeAreaView,
+  View,
 } from 'react-native';
-import {ICar} from '../../hooks/useCars';
+import useCars, {IFakeCar} from '../../hooks/useCars';
 import useDebounce from '../../hooks/useDebounce';
-import {CarsScreenProps} from '../Cars';
+import filterCars from '../../utils/list/filterCars';
 
 export interface ICarProps<DataType> {
   data: DataType;
@@ -91,22 +90,61 @@ const carStyles = StyleSheet.create({
   },
 });
 const SimpleSearch = () => {
-  const handleInputOnChange = useDebounce((text: string) => {
-    console.log(text);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [maybeCars, setMaybeCars] = useState<IFakeCar[] | null>(null);
+  const [cars] = useCars();
+  const handleOnSearchCars = useDebounce((text: string) => {
+    console.log('SIMPLE SEARCH', text);
+    //start filtering at any given word and when cars available
+    if (cars?.length && text.length >= 3) {
+      const matchingCars = filterCars(text, cars);
+      console.log('MATCHES', matchingCars);
+      setMaybeCars(matchingCars);
+      if (matchingCars?.length) {
+        setRecentSearches([...new Set([...recentSearches, text])]);
+      }
+    } else if (!text) {
+      setMaybeCars(null);
+    }
   }, 500);
+  const RecentSearches = () => {
+    return (
+      (recentSearches?.length && (
+        <View>
+          <Text>Recent Searches:</Text>
+          <View style={styles.flexRow}>
+            {recentSearches?.map(text => (
+              <Button
+                key={text}
+                title={text}
+                onPress={() => handleOnSearchCars(text)}
+              />
+            ))}
+          </View>
+        </View>
+      )) ||
+      null
+    );
+  };
   return (
     <SafeAreaView style={carStyles.container}>
       <TouchableOpacity>
         <TextInput
           style={styles.input}
-          onChangeText={handleInputOnChange}
+          onChangeText={handleOnSearchCars}
           placeholder="Search cars"
         />
+        <RecentSearches />
+        {maybeCars && <Text>Found {maybeCars.length} cars</Text>}
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
   input: {
     height: 40,
     marginLeft: 5,

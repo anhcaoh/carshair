@@ -19,7 +19,7 @@ const Cars = (_props: ICarsProps) => {
   const navigation = useNavigation<CarsScreenProps>();
   const [cars, loading, error] = useCars();
   const _cars = useMemo(() => {
-    return cars.map(
+    return cars?.map(
       ({id, car_vin, car, car_model, car_color, car_model_year, price}) => {
         return {
           id,
