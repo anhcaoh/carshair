@@ -12,6 +12,7 @@ import {
 import useCars, {IFakeCar} from '../../hooks/useCars';
 import useDebounce from '../../hooks/useDebounce';
 import filterCars from '../../utils/list/filterCars';
+import RecentSearches from './RecentSearches';
 
 export interface ICarProps<DataType> {
   data: DataType;
@@ -39,6 +40,11 @@ const carStyles = StyleSheet.create({
     paddingTop: 0,
     backgroundColor: '#f1f1f1',
   },
+  filterResultsContainer: {
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
   text: {
     fontSize: 24,
   },
@@ -62,10 +68,6 @@ const carStyles = StyleSheet.create({
   priceViewWithCTA: {
     width: '60%',
     height: '100%',
-  },
-  priceView: {
-    // width: '60%',
-    // height: '100%',
   },
   price: {
     fontWeight: 'bold',
@@ -94,11 +96,9 @@ const SimpleSearch = () => {
   const [maybeCars, setMaybeCars] = useState<IFakeCar[] | null>(null);
   const [cars] = useCars();
   const handleOnSearchCars = useDebounce((text: string) => {
-    console.log('SIMPLE SEARCH', text);
     //start filtering at any given word and when cars available
     if (cars?.length && text.length >= 3) {
       const matchingCars = filterCars(text, cars);
-      console.log('MATCHES', matchingCars);
       setMaybeCars(matchingCars);
       if (matchingCars?.length) {
         setRecentSearches([...new Set([...recentSearches, text])]);
@@ -107,25 +107,6 @@ const SimpleSearch = () => {
       setMaybeCars(null);
     }
   }, 500);
-  const RecentSearches = () => {
-    return (
-      (recentSearches?.length && (
-        <View>
-          <Text>Recent Searches:</Text>
-          <View style={styles.flexRow}>
-            {recentSearches?.map(text => (
-              <Button
-                key={text}
-                title={text}
-                onPress={() => handleOnSearchCars(text)}
-              />
-            ))}
-          </View>
-        </View>
-      )) ||
-      null
-    );
-  };
   return (
     <SafeAreaView style={carStyles.container}>
       <TouchableOpacity>
@@ -134,8 +115,13 @@ const SimpleSearch = () => {
           onChangeText={handleOnSearchCars}
           placeholder="Search cars"
         />
-        <RecentSearches />
-        {maybeCars && <Text>Found {maybeCars.length} cars</Text>}
+        <View style={carStyles.filterResultsContainer}>
+          <RecentSearches
+            data={recentSearches}
+            handleOnSearchCars={handleOnSearchCars}
+          />
+          {maybeCars && <Text>Found {maybeCars.length} cars:</Text>}
+        </View>
       </TouchableOpacity>
     </SafeAreaView>
   );

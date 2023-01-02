@@ -36,7 +36,6 @@ const Cars = (_props: ICarsProps) => {
   loading && <Text>Loading...</Text>;
   error && <Text>Something went wrong!</Text>;
   const handleItemOnPress = (item: any) => {
-    console.log('ITEM PRESSED', item);
     const {id, vin} = item;
     navigation.navigate('CarDetails', {id, vin});
   };

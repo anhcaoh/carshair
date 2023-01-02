@@ -17,9 +17,11 @@ const textStyles = StyleSheet.create({
     fontSize: 32,
   },
 });
-
-const Text = () => {
-  return <_Text />;
+interface ITextBase {
+  children: React.ReactElement | string;
+}
+const Text = (props: ITextBase) => {
+  return <_Text {...props} />;
 };
 const Bold = () => {
   return <_Text style={textStyles.bold} />;

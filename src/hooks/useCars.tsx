@@ -37,7 +37,6 @@ const useCars = (): [IFakeCar[] | null, boolean, any] => {
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
-    console.log('Initial fetch');
     if (!cars) {
       setLoading(true);
       fetch('https://myfakeapi.com/api/cars/')

@@ -8,6 +8,7 @@ import {
   View,
   Image,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import {ICar} from '../../hooks/useCars';
 import {CarsScreenProps} from '../Cars';
@@ -130,7 +131,6 @@ const Car = ({data, showLearnMore, Component, onPress}: ICarProps<ICar>) => {
                   <Button
                     title="LEARN MORE"
                     onPress={() => {
-                      console.log('LEARN MORE PRESSED');
                       navigation.navigate('CarDetails', {
                         id,
                         vin,
@@ -149,7 +149,7 @@ const Car = ({data, showLearnMore, Component, onPress}: ICarProps<ICar>) => {
         )}
         <View style={carStyles.bookNowView}>
           <Button
-            onPress={() => console.log('BOOK NOW PRESSED')}
+            onPress={() => Alert.alert('BOOK NOW', vin)}
             color={carStyles.button.color}
             title="BOOK NOW"
           />
